@@ -16,7 +16,7 @@ require("path")
 //login
 export const loginSession: RequestHandler = async (req, res, next) => {
     const myId = uuid();
-    const SECRET_KEY="micheal";
+    
     var currData;
 
    const v=req.body;
@@ -63,7 +63,7 @@ export const loginSession: RequestHandler = async (req, res, next) => {
     
     
     const token1 = jwt.sign({ id: currData.id?.toString(), username: currData.username }, check,{
-        expiresIn: '4 hours'
+        expiresIn: '4m'
     });
       console.log(token1)
      var USER = await Login.create({username:currData.username,token:token1,userId:currData.id,date:Date.now()});
@@ -100,19 +100,28 @@ export const loginSession: RequestHandler = async (req, res, next) => {
   //logout
   export const logoutSession: RequestHandler = async (req, res, next) => {
     const { id } = req.params;
-    const deletedUsage: Login | null =  await Login.findOne({
+    const deletedUsage=  await Login.findOne({
         where: {
          userId: id
          
-        }});
+        }});console.log(deletedUsage)
         if(deletedUsage==undefined)
         {
             return res
             .status(400)
-            .json({ message: " Invalid id", data: deletedUsage });
+            .json({ message: " Invalid id" });
         }
-    await Login.destroy({ where: { id:deletedUsage.id } });
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+        console.log(token)
+        const check=process.env.JWT_SECRET ||""
+        if(token==deletedUsage.token)
+    {await Login.destroy({ where: { id:deletedUsage.id } });
+    
     return res
       .status(200)
       .json({ message: `${ deletedUsage.username} loged out successfully` });
+    }
+    return res
+    .status(400)
+    .json({ message: "Autenticate" }); 
   };

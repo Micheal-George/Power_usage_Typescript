@@ -48,7 +48,7 @@ router.post("/login", loginSession);  //getAllcurrentUSER
 
 router.get("/currentuser", getAllcurrentUSER);
 
-router.delete("/logout/:id", logoutSession);
+router.delete("/logout/:id",auth, logoutSession);
 
 export default router;
 
