@@ -9,18 +9,18 @@ import {User} from "../models/user"
 import{Days} from "../models/days"
 
 export const createUsage: RequestHandler = async (req, res, next) => {
-  const { id } = req.params;
-  const currUser: Login | null =  await Login.findOne({
-      where: {
-       uuid: id
+  // const { id } = req.params;
+  // const currUser: Login | null =  await Login.findOne({
+  //     where: {
+  //      token: id
        
-      }});
- if(currUser==null)
- {
-  return res
-  .status(200)
-  .json({ message: " User not logged in"});
- }
+  //     }});
+//  if(currUser==null)
+//  {
+//   return res
+//   .status(200)
+//   .json({ message: " User not logged in"});
+//  }
 
 
     const time1:Date=new Date(req.body.fromTime)
@@ -46,11 +46,11 @@ export const createUsage: RequestHandler = async (req, res, next) => {
    c+=3*num
    if(v.applianceType=="high-power")
    c+=4*num
-   let normalid:number=v.userId
-   if(v.userId==undefined)
-     normalid=currUser.userId;
+   let normalid:number=v.UserId
+  //  if(v.userId==undefined)
+  //    normalid=currUser.userId;
      
-
+   console.log(normalid)
   
   var Usage = await Powers.create({fromTime: v.fromTime,toTime:v.toTime,applianceType:v.applianceType,unitConsumed:c,duration:str,userId:normalid})
  
@@ -123,7 +123,7 @@ export const getdayWiseusage: RequestHandler = async (req, res, next) => {
 };
 
 
-
+//list usage
 export const getTotalusage: RequestHandler = async (req, res, next) => {
   const {Op}=require('sequelize');
   const allUsage: Powers[] = await Powers.findAll({

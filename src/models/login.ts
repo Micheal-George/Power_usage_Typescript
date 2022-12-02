@@ -17,14 +17,19 @@ export class Login extends Model {
 
   @Column({ type: DataType.STRING,
     set(value) {
-        this.setDataValue('uuid', value);
+        this.setDataValue('token', value);
       } }
     )
-  uuid!: string;
+  token!: string;
 
   @Column({type: DataType.INTEGER,
     set(value) {
         this.setDataValue('userId', value);
       } })
   userId!: number;
+
+  @Column({ type: DataType.DATE,
+    }
+    )
+  date!: Date;
 }

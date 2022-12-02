@@ -11,7 +11,7 @@ import {
 } from "../controllers/usageConroller";
 
 import{loginSession,getAllcurrentUSER,logoutSession} from "../controllers/loginController"
-
+import {auth} from"../Auth/auth"
 import {
     createUSER,
     getAllUSER,
@@ -21,15 +21,15 @@ import {
 
 const router = Router();
 
-router.post("/usage/:id", createUsage);
+router.post("/usage",auth, createUsage);
 
-router.get("/usage", getAllUsage);
+router.get("/usage",auth, getAllUsage);
 
-router.get("/usage/:id", getUsageById);
+router.get("/usage/:id",auth, getUsageById);
 
-router.put("/usag/e:id", updateUsage);
+router.put("/usag/e:id",auth, updateUsage);
 
-router.delete("/usage/:id", deleteUsage);
+router.delete("/usage/:id",auth, deleteUsage);
 
 router.post("/user", createUSER);
 
@@ -39,9 +39,9 @@ router.get("/user/:id", getUSERById);
 
 router.put("/user/:id", updateUSER);
 
-router.post("/dayusage", getdayWiseusage);
+router.post("/dayusage",auth, getdayWiseusage);
 
-router.post("/totalusage", getTotalusage);
+router.post("/totalusage",auth, getTotalusage);
 
 //login
 router.post("/login", loginSession);  //getAllcurrentUSER

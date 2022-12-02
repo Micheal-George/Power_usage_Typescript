@@ -4,13 +4,19 @@ import { User } from "../models/user";
 import { LoginUser } from "../models/loginUser";
 import { v4 as uuid } from 'uuid';
 const { QueryTypes } = require('sequelize');
+import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { Sequelize } from "sequelize-typescript";
 import bcrypt from 'bcrypt';
+import { env } from 'process';
+import * as dotenv from "dotenv";
+dotenv.config({ path: '../.env' });
+// const key=require('dotenv').config({path:"../.env"} );
+require("path")
 
 //login
 export const loginSession: RequestHandler = async (req, res, next) => {
     const myId = uuid();
-
+    const SECRET_KEY="micheal";
     var currData;
 
    const v=req.body;
@@ -49,11 +55,16 @@ export const loginSession: RequestHandler = async (req, res, next) => {
     .json({ message: "User already logged in"}); 
   }
 
-
+  
   const isMatch = bcrypt.compareSync(v.password, currData.password);
   if(isMatch)
   {
-    var USER = await Login.create({username:currData.username,uuid:myId,userId:currData.id});
+    
+    const token1 = jwt.sign({ id: currData.id?.toString(), username: currData.username }, SECRET_KEY,{
+        expiresIn: '4 hours'
+    });
+      console.log(token1)
+     var USER = await Login.create({username:currData.username,token:token1,userId:currData.id,date:Date.now()});
     
     return res
       .status(200)
