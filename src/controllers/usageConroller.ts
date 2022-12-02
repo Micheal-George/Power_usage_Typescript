@@ -50,7 +50,7 @@ export const createUsage: RequestHandler = async (req, res, next) => {
   //  if(v.userId==undefined)
   //    normalid=currUser.userId;
      
-   console.log(normalid)
+  //  console.log(normalid)
   
   var Usage = await Powers.create({fromTime: v.fromTime,toTime:v.toTime,applianceType:v.applianceType,unitConsumed:c,duration:str,userId:normalid})
  
@@ -146,9 +146,12 @@ const time1:Date=new Date(req.body.fromTime)
    t=Math.floor(t/60000);
    
    const num=Math.floor(t/(60*24));
-
- 
+   let dur:string;
+   if(num<2)
+   dur=num+" day"
+ else
+ dur=num+" days"
   return res
     .status(200)
-    .json({fromTime:req.body.fromTime,toTime:req.body.toTime,unitconsumed:usage,duration:num});
+    .json({fromTime:req.body.fromTime,toTime:req.body.toTime,unitconsumed:usage,duration:dur});
 };

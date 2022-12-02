@@ -7,9 +7,9 @@ const { QueryTypes } = require('sequelize');
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { Sequelize } from "sequelize-typescript";
 import bcrypt from 'bcrypt';
-import { env } from 'process';
+// import { env } from 'process';
 import * as dotenv from "dotenv";
-dotenv.config({ path: '../.env' });
+ dotenv.config();
 // const key=require('dotenv').config({path:"../.env"} );
 require("path")
 
@@ -58,9 +58,11 @@ export const loginSession: RequestHandler = async (req, res, next) => {
   
   const isMatch = bcrypt.compareSync(v.password, currData.password);
   if(isMatch)
-  {
+  {   
+    const check=process.env.JWT_SECRET ||""
     
-    const token1 = jwt.sign({ id: currData.id?.toString(), username: currData.username }, SECRET_KEY,{
+    
+    const token1 = jwt.sign({ id: currData.id?.toString(), username: currData.username }, check,{
         expiresIn: '4 hours'
     });
       console.log(token1)
