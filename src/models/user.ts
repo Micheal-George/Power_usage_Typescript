@@ -34,7 +34,7 @@ export class User extends Model {
   @Column({type: DataType.STRING,allowNull: false,unique: true})
   mobileNum!: number;
 
-  // @HasMany(() => Powers)
-  //  powers!: Powers[];
+   @HasMany(() => Powers)
+   powers!: Powers[];
 
 }

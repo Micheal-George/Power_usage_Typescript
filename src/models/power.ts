@@ -22,9 +22,9 @@ export class Powers extends Model {
     duration!: string;
 
     
-    // @ForeignKey(() => User)
-    // @Column({ type: DataType.INTEGER})
-    // creatorId!: number;
+    @ForeignKey(() => User)
+    @Column({ type: DataType.INTEGER})
+    userId!: number;
     // @BelongsTo(() => User)
     // user!:User;
 }

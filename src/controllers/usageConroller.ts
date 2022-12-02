@@ -49,7 +49,7 @@ export const createUsage: RequestHandler = async (req, res, next) => {
    let normalid:number=v.userId
    if(v.userId==undefined)
      normalid=currUser.userId;
-     const Creator = Powers.belongsTo(User, { as: 'creator' });
+     
 
   
   var Usage = await Powers.create({fromTime: v.fromTime,toTime:v.toTime,applianceType:v.applianceType,unitConsumed:c,duration:str,userId:normalid})

@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
-
+import { Powers } from "../models/power";
 import { User } from "../models/user";
 import { v4 as uuid } from 'uuid';
 export const createUSER: RequestHandler = async (req, res, next) => {
    const v=req.body ;
+   const pUsage = User.hasMany(Powers, { as: 'categories' });
   var USER = await User.create({ username:v.username,displayName:v.displayName,password:v.password,email:v.email,mobileNum:v.mobileNum});
   
   return res
@@ -15,7 +16,7 @@ export const createUSER: RequestHandler = async (req, res, next) => {
 
 export const getAllUSER: RequestHandler = async (req, res, next) => {
   
-  const allUSER: User[] = await User.findAll();
+  const allUSER: User[] = await User.findAll({include:[Powers]});
   if(allUSER.length==0)
   {
     return res
@@ -29,7 +30,7 @@ export const getAllUSER: RequestHandler = async (req, res, next) => {
 
 export const getUSERById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
-  const USER: User | null = await User.findByPk(id);
+  const USER: User | null = await User.findByPk(id,{include:[Powers]});
   if(USER==null)
   {
     return res
@@ -55,3 +56,4 @@ export const updateUSER: RequestHandler = async (req, res, next) => {
     .status(200)
     .json({ message: "updated successfully", data: updatedUSER });
 };
+
