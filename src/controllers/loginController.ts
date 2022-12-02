@@ -5,6 +5,7 @@ import { LoginUser } from "../models/loginUser";
 import { v4 as uuid } from 'uuid';
 const { QueryTypes } = require('sequelize');
 import { Sequelize } from "sequelize-typescript";
+import bcrypt from 'bcrypt';
 
 //login
 export const loginSession: RequestHandler = async (req, res, next) => {
@@ -13,7 +14,7 @@ export const loginSession: RequestHandler = async (req, res, next) => {
     var currData;
 
    const v=req.body;
-
+   
     var loginUser=LoginUser.build({username:v.username,password:v.password,email:v.email,mobileNum:v.mobileNum})
 
     if(v.username!=undefined)
@@ -49,7 +50,8 @@ export const loginSession: RequestHandler = async (req, res, next) => {
   }
 
 
-  if(currData.password==loginUser.password)
+  const isMatch = bcrypt.compareSync(v.password, currData.password);
+  if(isMatch)
   {
     var USER = await Login.create({username:currData.username,uuid:myId,userId:currData.id});
     

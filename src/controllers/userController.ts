@@ -2,10 +2,15 @@ import { RequestHandler } from "express";
 import { Powers } from "../models/power";
 import { User } from "../models/user";
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 export const createUSER: RequestHandler = async (req, res, next) => {
    const v=req.body ;
-   const pUsage = User.hasMany(Powers, { as: 'categories' });
-  var USER = await User.create({ username:v.username,displayName:v.displayName,password:v.password,email:v.email,mobileNum:v.mobileNum});
+   const saltRounds = 8
+
+  
+      const password = await bcrypt.hash(v.password, saltRounds);
+  
+  var USER = await User.create({ username:v.username,displayName:v.displayName,password:password,email:v.email,mobileNum:v.mobileNum});
   
   return res
     .status(200)
