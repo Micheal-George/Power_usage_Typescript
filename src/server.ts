@@ -2,15 +2,24 @@ import express from "express";
 import Routes from "./routes/route";
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
-
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('../swagger.json');
 const app = express();
 
 app.use(json());
 
 app.use(urlencoded({ extended: true }));
 
-app.use("/power", Routes);
+app.get("/test", (req, res) => {
+  res.status(200).send("Hello world");
+});
 
+app.use("/power", Routes);
+app.use(
+  '/api-docs',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
 app.use(
   (
     err: Error,
@@ -30,6 +39,8 @@ connection
   .catch((err) => {
     console.log("Error", err);
   });
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server started on port 3000");
 });
+
+export default app

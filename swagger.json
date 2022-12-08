@@ -1,23 +1,143 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0", 
-    "title": "My User Project CRUD",
-    "description": "My User Project Application API",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
-  },
-  "host": "localhost:3000",
+    "title": "Simple API overview",
+    "version": "v2"
+  },"host": "localhost:3001",
   "basePath": "/",
-  "tags": [
-    {
-      "name": "Users",
-      "description": "API for users in the system"
+  "paths": {
+    "/power/user": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/power/adduser": {
+      
+      "post": {
+        "tags": ["Users"],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required":true,
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/power/usage": {
+      "get": {
+        "tags": ["Usage"],
+        "summary": "Get all usage data",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      }
+    },
+
+    "/power/addusage": {
+      
+      "post": {
+        "tags": ["Usage"],
+        "description": "Create new usage in system",
+        "parameters": [
+          {
+            "name": "usage",
+            "in": "body",
+            "required":true,
+            "description": "Usage that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New usage is created",
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      }
+    }, 
+    "/power/login": {
+      "post": {
+        "tags": ["Login"],
+        "description": "Login",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "required":true,
+            "description": "Login user",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Successfuly logged in",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        }
+      }
+      },
+      "/power/currentuser": {
+        "get": {
+          "tags": ["Login"],
+          "summary": "Get all current users",
+          "responses": {
+            "200": {
+              "description": "Successfuly fetched data",
+              "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          }
+        }
+        }
+
+
+
     }
-  ],
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"]
+     
+   
+    
+  
+  
 }
+
+

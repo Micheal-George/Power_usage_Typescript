@@ -7,31 +7,39 @@ import {
   updateUsage,
   getUsageById,
   getdayWiseusage,
-  getTotalusage
+  getTotalusage,
 } from "../controllers/usageConroller";
 
-import{loginSession,getAllcurrentUSER,logoutSession} from "../controllers/loginController"
-import {auth} from"../Auth/auth"
 import {
-    createUSER,
-    getAllUSER,
-    updateUSER,
-    getUSERById,
-  } from "../controllers/userController";
+  loginSession,
+  getAllcurrentUSER,
+  logoutSession,
+} from "../controllers/loginController";
+import { auth } from "../Auth/auth";
+import {
+  createUSER,
+  getAllUSER,
+  updateUSER,
+  getUSERById,
+  deleteUser,
+} from "../controllers/userController";
 
 const router = Router();
 
-router.post("/usage",auth, createUsage);
+router.post("/addusage", createUsage);
+// router.post("/usage", createUsage);
 
-router.get("/usage",auth, getAllUsage);
+router.get("/usage", getAllUsage);
+// router.get("/usage", getAllUsage);
 
-router.get("/usage/:id",auth, getUsageById);
+router.get("/usage/:id", getUsageById);
+// router.get("/usage/:id", getUsageById);
 
-router.put("/usag/e:id",auth, updateUsage);
+router.put("/usage/:id", auth, updateUsage);
 
-router.delete("/usage/:id",auth, deleteUsage);
+router.delete("/usage/:id", auth, deleteUsage);
 
-router.post("/user", createUSER);
+router.post("/adduser", createUSER);
 
 router.get("/user", getAllUSER);
 
@@ -39,18 +47,19 @@ router.get("/user/:id", getUSERById);
 
 router.put("/user/:id", updateUSER);
 
-router.post("/dayusage",auth, getdayWiseusage);
+router.delete("/user/:id", deleteUser);
 
-router.post("/totalusage",auth, getTotalusage);
+router.post("/dayusage", auth, getdayWiseusage);
+
+router.post("/totalusage", auth, getTotalusage);
 
 //login
-router.post("/login", loginSession);  //getAllcurrentUSER
+router.post("/login", loginSession); //getAllcurrentUSER
 
 router.get("/currentuser", getAllcurrentUSER);
 
-router.delete("/logout/:id",auth, logoutSession);
+router.delete("/logout/:id", auth, logoutSession);
 
 export default router;
-
 
 //getdayWiseusage

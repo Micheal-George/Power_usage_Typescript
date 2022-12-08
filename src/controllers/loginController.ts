@@ -70,7 +70,7 @@ export const loginSession: RequestHandler = async (req, res, next) => {
     
     return res
       .status(200)
-      .json({ message: "created successfully", data: USER});
+      .json({ message: "logged in  successfully", data: USER});
   }
 
   else 

@@ -1,0 +1,20 @@
+FROM node:latest as base
+
+WORKDIR /home/node/app
+
+COPY package*.json ./
+
+RUN npm i
+
+COPY . .
+
+
+FROM base as production
+
+ENV NODE_PATH=./build
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
