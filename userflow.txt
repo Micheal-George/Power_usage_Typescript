@@ -1,0 +1,41 @@
+swagger url:-  http://localhost:3001/api-docs/#/
+
+
+/adduser
+{
+    "username": "Sam",
+"displayName": "Sam",
+"password": "callme",
+  "email": "sammanual@gmail.com",
+  "mobileNum": "7907304335"
+    
+}
+
+
+/login
+{
+    "password": "callme",
+  "email": "sammanual@gmail.com"
+  }
+
+/addusage
+{
+    "fromTime": "2022-11-16T08:32:00.000Z",
+  "toTime": "2022-11-17T10:33:00.000Z",
+  "applianceType":"mid-power",
+  "UserId":1
+}
+
+/day usage
+{
+    "fromTime": "2022-11-16T08:32:00.000Z",
+  "toTime": "2022-11-17T10:33:00.000Z",
+  
+}
+
+/totalusage
+{
+    "fromTime": "2022-11-16T08:32:00.000Z",
+  "toTime": "2022-11-17T10:33:00.000Z",
+  
+}
