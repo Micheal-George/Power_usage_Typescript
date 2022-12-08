@@ -15,6 +15,11 @@ app.get("/test", (req, res) => {
 });
 
 app.use("/power", Routes);
+var options = {
+  swaggerOptions: {
+    authAction :{ JWT: {name: "JWT", schema: {type: "apiKey", in: "header", name: "Authorization", description: ""}, value: "Bearer <JWT>"} }
+  }
+};
 app.use(
   '/api-docs',
   swaggerUi.serve, 

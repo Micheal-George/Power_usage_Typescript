@@ -26,10 +26,11 @@ import {
 
 const router = Router();
 
-router.post("/addusage", createUsage);
-// router.post("/usage", createUsage);
+// router.post("/addusage", createUsage);
+router.post("/addusage",auth, createUsage);
 
-router.get("/usage", getAllUsage);
+router.get("/usage", auth,getAllUsage);
+
 // router.get("/usage", getAllUsage);
 
 router.get("/usage/:id", getUsageById);

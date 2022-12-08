@@ -1,9 +1,21 @@
 {
   "swagger": "2.0",
+  
+
   "info": {
     "title": "Simple API overview",
     "version": "v2"
-  },"host": "localhost:3001",
+  },
+  "securityDefinitions": {
+    "Authorization": {
+    "type": "apiKey",
+    "name": "authorization",
+    "in": "header",
+    "description": "Authentication token"
+  }
+},
+  
+  "host": "localhost:3001",
   "basePath": "/",
   "paths": {
     "/power/user": {
@@ -20,6 +32,30 @@
         }
       }
     },
+
+    "/power/user/{id}": {
+      "get": {"parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "integer"
+        }
+      ],
+        "tags": ["Users"],
+        "summary": "Get  user by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+
     "/power/adduser": {
       
       "post": {
@@ -49,6 +85,11 @@
     },
     "/power/usage": {
       "get": {
+        "security": [
+          {
+             "Authorization": []
+          }
+        ],
         "tags": ["Usage"],
         "summary": "Get all usage data",
         "responses": {
@@ -65,6 +106,11 @@
     "/power/addusage": {
       
       "post": {
+        "security": [
+          {
+             "Authorization": []
+          }
+        ],
         "tags": ["Usage"],
         "description": "Create new usage in system",
         "parameters": [
@@ -89,6 +135,74 @@
         }
       }
     }, 
+
+
+    "/power/dayusage": {
+      
+      "post": {
+        "security": [
+          {
+             "Authorization": []
+          }
+        ],
+        "tags": ["Usage"],
+        "description": "Get usage data",
+        "parameters": [
+          {
+            "name": "usage",
+            "in": "body",
+            "required":true,
+            "description": "Usage data",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "usage data fetched",
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      }
+    },
+
+    "/power/totalusage": {
+      
+      "post": {
+        "security": [
+          {
+             "Authorization": []
+          }
+        ],
+        "tags": ["Usage"],
+        "description": "Get totalusage data",
+        "parameters": [
+          {
+            "name": "usage",
+            "in": "body",
+            "required":true,
+            "description": "Usage data",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "totalusage data fetched",
+            "schema": {
+              "$ref": "#/definitions/Usage"
+            }
+          }
+        }
+      }
+    },
+    
     "/power/login": {
       "post": {
         "tags": ["Login"],
@@ -128,9 +242,36 @@
             }
           }
         }
+        },
+
+        "/power/logout/{id}": {
+          "delete": {
+            "security": [
+              {
+                 "Authorization": []
+              }
+            ],
+            "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of user that we want to loout",
+              "type": "integer"
+            }
+          ],
+            "tags": ["Login"],
+            "summary": "log out",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Users"
+                }
+              }
+            }
+          }
         }
-
-
 
     }
      
